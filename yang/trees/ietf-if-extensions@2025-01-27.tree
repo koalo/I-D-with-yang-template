@@ -1,0 +1,29 @@
+module: ietf-if-extensions
+
+  augment /if:interfaces/if:interface:
+    +--rw link-flap-suppression {link-flap-suppression}?
+    |  +--rw down?                  uint32
+    |  +--rw up?                    uint32
+    |  +--ro carrier-transitions?   yang:counter64
+    |  +--ro timer-running?         enumeration
+    +--rw dampening! {dampening}?
+    |  +--rw half-life?           uint32
+    |  +--rw reuse?               uint32
+    |  +--rw suppress?            uint32
+    |  +--rw max-suppress-time?   uint32
+    |  +--ro penalty?             uint32
+    |  +--ro suppressed?          boolean
+    |  +--ro time-remaining?      uint32
+    +--rw encapsulation
+    |  +--rw (encaps-type)?
+    +--rw loopback?                identityref {loopback}?
+    +--rw max-frame-size?          uint32 {max-frame-size}?
+    +--ro forwarding-mode?         identityref
+    +--rw peer-interface?          if:interface-ref {peer-interface}?
+  augment /if:interfaces/if:interface:
+    +--rw parent-interface    if:interface-ref {sub-interfaces}?
+  augment /if:interfaces/if:interface/if:statistics:
+    +--ro in-discard-overflows?   yang:counter64
+  augment /if:interfaces/if:interface/if:statistics:
+    +--ro in-discard-unknown-encaps?   yang:counter64
+            {sub-interfaces}?
